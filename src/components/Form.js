@@ -20,10 +20,10 @@ class Form extends React.Component {
       onSaveButtonClick,
     } = this.props;
 
-    let teste = '';
+    let hasTrunfoLet = '';
 
     if (hasTrunfo === false) {
-      teste = (
+      hasTrunfoLet = (
         <label htmlFor="trunfo-input">
           Super Trunfo
           <input
@@ -37,8 +37,7 @@ class Form extends React.Component {
         </label>
       );
     } else {
-      teste = <span>Você já tem um Super Trunfo em seu baralho</span>;
-      console.log('ta funfando nao?');
+      hasTrunfoLet = <span>Você já tem um Super Trunfo em seu baralho</span>;
     }
 
     return (
@@ -106,7 +105,7 @@ class Form extends React.Component {
           </select>
         </label>
 
-        {teste}
+        {hasTrunfoLet}
         {/* <label htmlFor="trunfo-input">
           Super Trunfo
           <input
