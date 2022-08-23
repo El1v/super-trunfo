@@ -13,6 +13,7 @@ class App extends React.Component {
     cardRare: '',
     cardTrunfo: false,
     isSaveButtonDisabled: true,
+    data: [],
   };
 
   onInputChange = ({ target }) => {
@@ -29,16 +30,17 @@ class App extends React.Component {
         cardAttr3,
       } = this.state;
 
+      // Valida se os inputs estão vazios
       const validateEmptyInput = (cardName && cardDescription && cardImage && cardRare)
         ? 'true' : 'false';
-
+      // Valida se o atributo é <= 90 e >= 0
       const maxCartAttr = 90;
       const validateCorrectAttr = (
         cardAttr1 >= 0 && cardAttr1 <= maxCartAttr
         && cardAttr2 >= 0 && cardAttr2 <= maxCartAttr
         && cardAttr3 >= 0 && cardAttr3 <= maxCartAttr
       ) ? 'true' : 'false';
-
+      // Valida se a soma dos atributos é <= 210
       const maxAllCardAttr = 210;
       const validateMaxAttr = (
         (parseInt(cardAttr1, 10)
@@ -46,6 +48,7 @@ class App extends React.Component {
         + parseInt(cardAttr3, 10)) <= maxAllCardAttr
       ) ? 'true' : 'false';
 
+      // Verifica se todas as validações são true, se for ele altera o estado do botão
       if
       (validateMaxAttr === 'true'
       && validateCorrectAttr === 'true'
@@ -55,6 +58,19 @@ class App extends React.Component {
         this.setState({ isSaveButtonDisabled: true });
       }
     });
+  };
+
+  onSaveButtonClick = (newObj) => {
+    this.setState((prevState) => ({
+      data: [...prevState.data, newObj],
+      cardName: '',
+      cardDescription: '',
+      cardImage: '',
+      cardAttr1: 0,
+      cardAttr2: 0,
+      cardAttr3: 0,
+      cardRare: 'normal',
+    }));
   };
 
   render() {
@@ -84,6 +100,7 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           onInputChange={ this.onInputChange }
           isSaveButtonDisabled={ isSaveButtonDisabled }
+          onSaveButtonClick={ this.onSaveButtonClick }
         />
         <hr />
         <Card
