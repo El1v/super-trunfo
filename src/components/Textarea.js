@@ -21,9 +21,6 @@ class Textarea extends React.Component {
 }
 
 Textarea.propTypes = {
-  // key: PropTypes.string,
-  // limit: PropTypes.number,
-  // label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
   value: PropTypes.string,
