@@ -5,19 +5,6 @@ import Textarea from './Textarea';
 
 class Form extends React.Component {
   render() {
-    // state = {
-    //   cardName: '',
-    //   cardDescription: '',
-    //   cardAttr1: '',
-    //   cardAttr2: '',
-    //   cardAttr3: '',
-    //   cardImage: '',
-    //   cardRare: '',
-    //   cardTrunfo: false,
-    //   hasTrunfo: false,
-    //   isSaveButtonDisabled: false,
-    // };
-
     const {
       cardName,
       cardDescription,
@@ -86,10 +73,15 @@ class Form extends React.Component {
 
         <label htmlFor="rare-input">
           Raridade da Carta
-          <select data-testid="rare-input" value={ cardRare } onChange={ onInputChange }>
-            <option>normal</option>
-            <option>raro</option>
-            <option>muito raro</option>
+          <select
+            data-testid="rare-input"
+            value={ cardRare }
+            onChange={ onInputChange }
+            name="cardRare"
+          >
+            <option value="normal">normal</option>
+            <option value="raro">raro</option>
+            <option value="muito raro">muito raro</option>
           </select>
         </label>
 
