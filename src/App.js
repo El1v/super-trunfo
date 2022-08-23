@@ -12,12 +12,49 @@ class App extends React.Component {
     cardImage: '',
     cardRare: '',
     cardTrunfo: false,
+    isSaveButtonDisabled: true,
   };
 
   onInputChange = ({ target }) => {
     const { name } = target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }, () => {
+      const {
+        cardName,
+        cardDescription,
+        cardImage,
+        cardRare,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+      } = this.state;
+
+      const validateEmptyInput = (cardName && cardDescription && cardImage && cardRare)
+        ? 'true' : 'false';
+
+      const maxCartAttr = 90;
+      const validateCorrectAttr = (
+        cardAttr1 >= 0 && cardAttr1 <= maxCartAttr
+        && cardAttr2 >= 0 && cardAttr2 <= maxCartAttr
+        && cardAttr3 >= 0 && cardAttr3 <= maxCartAttr
+      ) ? 'true' : 'false';
+
+      const maxAllCardAttr = 210;
+      const validateMaxAttr = (
+        (parseInt(cardAttr1, 10)
+        + parseInt(cardAttr2, 10)
+        + parseInt(cardAttr3, 10)) <= maxAllCardAttr
+      ) ? 'true' : 'false';
+
+      if
+      (validateMaxAttr === 'true'
+      && validateCorrectAttr === 'true'
+      && validateEmptyInput === 'true') {
+        this.setState({ isSaveButtonDisabled: false });
+      } else {
+        this.setState({ isSaveButtonDisabled: true });
+      }
+    });
   };
 
   render() {
@@ -30,6 +67,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      isSaveButtonDisabled,
     } = this.state;
 
     return (
@@ -45,6 +83,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
           onInputChange={ this.onInputChange }
+          isSaveButtonDisabled={ isSaveButtonDisabled }
         />
         <hr />
         <Card
@@ -56,7 +95,6 @@ class App extends React.Component {
           cardImage={ cardImage }
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
-          onInputChange={ this.onInputChange }
         />
       </div>
     );
