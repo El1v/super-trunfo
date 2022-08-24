@@ -16,6 +16,7 @@ class App extends React.Component {
     data: [],
     hasTrunfo: false,
     inputFilter: '',
+    selectFilter: 'todas',
   };
 
   onInputChange = ({ target }) => {
@@ -108,6 +109,7 @@ class App extends React.Component {
       hasTrunfo,
       data,
       inputFilter,
+      selectFilter,
     } = this.state;
 
     return (
@@ -148,9 +150,29 @@ class App extends React.Component {
           name="inputFilter"
           onChange={ this.onInputFilter }
         />
+        <select
+          data-testid="rare-filter"
+          value={ selectFilter }
+          name="selectFilter"
+          onChange={ this.onInputFilter }
+        >
+          <option value="todas">todas</option>
+          <option value="normal">normal</option>
+          <option value="raro">raro</option>
+          <option value="muito raro">muiro raro</option>
+        </select>
         <hr />
         {
           data
+            .filter((e) => {
+              let filter = '';
+              if (selectFilter === 'todas') {
+                filter = '';
+                return e.cardRare.includes(filter);
+              }
+              filter = selectFilter;
+              return e.cardRare === filter;
+            })
             .filter((e) => e.cardName.includes(inputFilter))
             .map((e, index) => (
               <div key={ index }>
