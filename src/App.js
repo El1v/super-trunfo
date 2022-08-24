@@ -15,6 +15,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     data: [],
     hasTrunfo: false,
+    inputFilter: '',
   };
 
   onInputChange = ({ target }) => {
@@ -61,6 +62,12 @@ class App extends React.Component {
     });
   };
 
+  onInputFilter = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value });
+  };
+
   onSaveButtonClick = (newObj) => {
     if (newObj.cardTrunfo === true) {
       this.setState({ hasTrunfo: true });
@@ -100,6 +107,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
       hasTrunfo,
       data,
+      inputFilter,
     } = this.state;
 
     return (
@@ -131,8 +139,43 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
         />
         <hr />
-
+        <p>Filtros de busca</p>
+        <input
+          placeholder="Nome da carta"
+          data-testid="name-filter"
+          type="text"
+          value={ inputFilter }
+          name="inputFilter"
+          onChange={ this.onInputFilter }
+        />
+        <hr />
         {
+          data
+            .filter((e) => e.cardName.includes(inputFilter))
+            .map((e, index) => (
+              <div key={ index }>
+                <Card
+                  key={ index }
+                  cardName={ e.cardName }
+                  cardDescription={ e.cardDescription }
+                  cardAttr1={ e.cardAttr1 }
+                  cardAttr2={ e.cardAttr2 }
+                  cardAttr3={ e.cardAttr3 }
+                  cardImage={ e.cardImage }
+                  cardRare={ e.cardRare }
+                  cardTrunfo={ e.cardTrunfo }
+                />
+                <button
+                  data-testid="delete-button"
+                  type="button"
+                  onClick={ () => this.removeCard(index) }
+                >
+                  Excluir
+                </button>
+              </div>
+            ))
+        }
+        {/* {
           data.map((e, index) => (
             <div key={ index }>
               <Card
@@ -155,19 +198,6 @@ class App extends React.Component {
               </button>
             </div>
           ))
-        }
-        {/* {
-          data.map((e, index) => (<Card
-            key={ index }
-            cardName={ e.cardName }
-            cardDescription={ e.cardDescription }
-            cardAttr1={ e.cardAttr1 }
-            cardAttr2={ e.cardAttr2 }
-            cardAttr3={ e.cardAttr3 }
-            cardImage={ e.cardImage }
-            cardRare={ e.cardRare }
-            cardTrunfo={ e.cardTrunfo }
-          />))
         } */}
       </div>
     );
