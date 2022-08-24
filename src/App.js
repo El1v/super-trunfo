@@ -17,6 +17,8 @@ class App extends React.Component {
     hasTrunfo: false,
     inputFilter: '',
     selectFilter: 'todas',
+    checkboxFilter: false,
+    isDisabled: false,
   };
 
   onInputChange = ({ target }) => {
@@ -69,6 +71,19 @@ class App extends React.Component {
     this.setState({ [name]: value });
   };
 
+  onCheckFilter = ({ target }) => {
+    const { name } = target;
+    const { checkboxFilter } = this.state;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({ [name]: value }, () => {
+      if (checkboxFilter) {
+        this.setState({ isDisabled: false });
+      } else {
+        this.setState({ isDisabled: true });
+      }
+    });
+  };
+
   onSaveButtonClick = (newObj) => {
     if (newObj.cardTrunfo === true) {
       this.setState({ hasTrunfo: true });
@@ -110,6 +125,8 @@ class App extends React.Component {
       data,
       inputFilter,
       selectFilter,
+      checkboxFilter,
+      isDisabled,
     } = this.state;
 
     return (
@@ -149,21 +166,38 @@ class App extends React.Component {
           value={ inputFilter }
           name="inputFilter"
           onChange={ this.onInputFilter }
+          disabled={ isDisabled }
         />
         <select
           data-testid="rare-filter"
           value={ selectFilter }
           name="selectFilter"
           onChange={ this.onInputFilter }
+          disabled={ isDisabled }
         >
           <option value="todas">todas</option>
           <option value="normal">normal</option>
           <option value="raro">raro</option>
           <option value="muito raro">muiro raro</option>
         </select>
+        <input
+          data-testid="trunfo-filter"
+          type="checkbox"
+          checked={ checkboxFilter }
+          name="checkboxFilter"
+          onChange={ this.onCheckFilter }
+          label="Super Trunfo"
+        />
         <hr />
         {
           data
+            .filter((e) => {
+              const filter = '';
+              if (checkboxFilter) {
+                return e.cardTrunfo === true;
+              }
+              return e.cardName.includes(filter);
+            })
             .filter((e) => {
               let filter = '';
               if (selectFilter === 'todas') {
