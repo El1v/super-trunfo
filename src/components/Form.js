@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import Textarea from './Textarea';
+import '../index.css';
+import '../select.css';
+import '../checkbox.css';
 
 class Form extends React.Component {
   render() {
@@ -24,7 +27,7 @@ class Form extends React.Component {
 
     if (hasTrunfo === false) {
       hasTrunfoLet = (
-        <label htmlFor="trunfo-input">
+        <label className="control control-checkbox" htmlFor="trunfo-input">
           Super Trunfo
           <input
             data-testid="trunfo-input"
@@ -34,6 +37,7 @@ class Form extends React.Component {
             checked={ cardTrunfo }
             onChange={ onInputChange }
           />
+          <div className="control_indicator" />
         </label>
       );
     } else {
@@ -41,7 +45,7 @@ class Form extends React.Component {
     }
 
     return (
-      <form>
+      <form className="form">
         <Input
           label="Nome"
           dataTestid="name-input"
@@ -93,16 +97,19 @@ class Form extends React.Component {
 
         <label htmlFor="rare-input">
           Raridade da Carta
-          <select
-            data-testid="rare-input"
-            value={ cardRare }
-            onChange={ onInputChange }
-            name="cardRare"
-          >
-            <option value="normal">normal</option>
-            <option value="raro">raro</option>
-            <option value="muito raro">muito raro</option>
-          </select>
+          <div className="select">
+            <select
+              data-testid="rare-input"
+              value={ cardRare }
+              onChange={ onInputChange }
+              name="cardRare"
+            >
+              <option value="normal">normal</option>
+              <option value="raro">raro</option>
+              <option value="muito raro">muito raro</option>
+            </select>
+            <div className="select_arrow" />
+          </div>
         </label>
 
         {hasTrunfoLet}

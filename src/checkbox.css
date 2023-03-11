@@ -1,0 +1,126 @@
+.control {
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  padding-left: 30px;
+  padding-top: 3px;
+  position: relative;
+}
+
+.control input {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.control_indicator {
+  background: #e6e6e6;
+  border: 0 solid black;
+  border-radius: 0;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: 2px;
+  width: 20px;
+}
+
+.control:hover input ~ .control_indicator, .control input:focus ~ .control_indicator {
+  background: rgb(204, 204, 204);
+}
+
+.control input:checked ~ .control_indicator {
+  background: black;
+}
+
+.control_indicator ~ .control input:disabled {
+  background: #e6e6e6;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.control_indicator:after {
+  box-sizing: unset;
+  content: '';
+  display: none;
+  position: absolute;
+}
+
+.control input:checked ~ .control_indicator:after {
+  display: block;
+}
+
+.control_indicator:after .control-checkbox {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  height: 8px;
+  left: 8px;
+  top: 4px;
+  transform: rotate(45deg);
+  width: 3px;
+}
+
+.control-checkbox input:disabled ~ .control_indicator:after {
+  border-color: #7b7b7b;
+}
+
+.control-checkbox .control_indicator:before {
+  background: black;
+  border-radius: 3rem;
+  content: '';
+  display: block;
+  height: 4.5rem;
+  left: 0;
+  margin-left: -1.3rem;
+  margin-top: -1.3rem;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  transform: scale(0);
+  width: 4.5rem;
+  z-index: 99999;
+}
+
+@keyframes s-ripple {
+
+  0% {
+    transform: scale(0);
+  }
+
+  20% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes s-ripple-dup {
+
+  0% {
+    transform: scale(0);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.control-checkbox input + .control_indicator:before {
+  animation: s-ripple 250ms ease-out;
+}
+
+.control-checkbox input:checked + .control_indicator:before {
+  animation-name: s-ripple-dup;
+}
